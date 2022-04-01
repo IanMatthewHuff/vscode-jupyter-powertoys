@@ -1,6 +1,7 @@
-- [ ] Register a new view container
+- [x] New setting and activation
+- [x] Register a new view container
 - [ ] Host a treeview control in the view container
-- [ ] Give all open documents an entry in the tree view
+- [ ] Give all open documents an entry in the tree view (Yes? Maybe just active document?)
 - [ ] For each document entry create cell entries per cell
 - [ ] Each cell entry has commands to run the cell
 - [ ] Add markdown headers as sub levels in trees (also run command per)

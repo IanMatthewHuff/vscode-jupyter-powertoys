@@ -342,6 +342,12 @@
                     "id": "jupyterKernelsView",
                     "name": "Kernels",
                     "when": "!jupyter.hasKernels && config.jupyter.kernelManagement.enabled"
+                },
+                {
+                    "type": "tree",
+                    "id": "jupyterSimpleTOC",
+                    "name": "Table Of Contents",
+                    "when": "config.jupyter-powertoys.simpleTableOfContents.enabled"
                 }
             ]
         },
@@ -350,6 +356,12 @@
                 "type": "object",
                 "title": "NotebookRunGroups",
                 "properties": {
+                    "jupyter-powertoys.simpleTableOfContents.enabled": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "Enable a simple table of contents.",
+                        "scope": "machine"
+                    },
                     "notebookRunGroups.enabled": {
                         "type": "boolean",
                         "default": true,
