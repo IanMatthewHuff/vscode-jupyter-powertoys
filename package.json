@@ -2,12 +2,13 @@
     "name": "vscode-jupyter-powertoys",
     "displayName": "Jupyter PowerToys",
     "publisher": "ms-toolsai",
+    "preview": true,
     "author": {
         "name": "Microsoft Corporation"
     },
     "license": "MIT",
     "homepage": "https://github.com/Microsoft/vscode-jupyter-powertoys",
-    "description": "Optional, experimental, and advanced features for Jupyter notebook support in VS Code.",
+    "description": "Experimental features for Jupyter notebook support in VS Code.",
     "repository": {
         "type": "git",
         "url": "https://github.com/Microsoft/vscode-jupyter-powertoys"
@@ -41,9 +42,10 @@
         "notebookEditor",
         "notebookEditorEdit"
     ],
-    "main": "./out/extension.js",
+    "main": "./out/main.js",
     "activationEvents": [
-        "onNotebook:*",
+        "onNotebook:jupyter-notebook",
+        "onNotebook:interactive",
         "onView:jupyterKernelsView"
     ],
     "contributes": {
@@ -158,6 +160,12 @@
                 "title": "Create Interactive Window",
                 "category": "Notebook",
                 "icon": "$(window)"
+            },
+            {
+                "command": "jupyter-kernelManager.editKernelSpec",
+                "title": "Edit KernelSpec",
+                "category": "Notebook",
+                "icon": "$(json)"
             }
         ],
         "menus": {
@@ -165,47 +173,47 @@
                 {
                     "command": "vscode-notebook-groups.executeGroup1",
                     "group": "Notebook Run Groups",
-                    "when": "config.notebookRunGroups.groupCount > 0 && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 0 && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.addGroup1",
                     "group": "Notebook Run Groups",
-                    "when": "config.notebookRunGroups.groupCount > 0 && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 0 && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.removeGroup1",
                     "group": "Notebook Run Groups",
-                    "when": "config.notebookRunGroups.groupCount > 0 && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 0 && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.executeGroup2",
                     "group": "Notebook Run Groups",
-                    "when": "config.notebookRunGroups.groupCount > 1 && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 1 && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.addGroup2",
                     "group": "Notebook Run Groups",
-                    "when": "config.notebookRunGroups.groupCount > 1 && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 1 && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.removeGroup2",
                     "group": "Notebook Run Groups",
-                    "when": "config.notebookRunGroups.groupCount > 1 && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 1 && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.executeGroup3",
                     "group": "Notebook Run Groups",
-                    "when": "config.notebookRunGroups.groupCount > 2 && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 2 && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.addGroup3",
                     "group": "Notebook Run Groups",
-                    "when": "config.notebookRunGroups.groupCount > 2 && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 2 && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.removeGroup3",
                     "group": "Notebook Run Groups",
-                    "when": "config.notebookRunGroups.groupCount > 2 && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 2 && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "jupyter-kernelManager.shutdownKernel",
@@ -217,92 +225,92 @@
                 {
                     "command": "vscode-notebook-groups.executeGroup1",
                     "group": "navigation/execute@6",
-                    "when": "config.notebookRunGroups.groupCount > 0 && config.notebookRunGroups.runIconsOnEditorToolbar && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 0 && config.jupyter.notebookRunGroups.runIconsOnEditorToolbar && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.executeGroup2",
                     "group": "navigation/execute@7",
-                    "when": "config.notebookRunGroups.groupCount > 1 && config.notebookRunGroups.runIconsOnEditorToolbar && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 1 && config.jupyter.notebookRunGroups.runIconsOnEditorToolbar && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.executeGroup3",
                     "group": "navigation/execute@8",
-                    "when": "config.notebookRunGroups.groupCount > 2 && config.notebookRunGroups.runIconsOnEditorToolbar && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 2 && config.jupyter.notebookRunGroups.runIconsOnEditorToolbar && config.jupyter.notebookRunGroups.enabled"
                 }
             ],
             "notebook/cell/title": [
                 {
                     "command": "vscode-notebook-groups.addGroup1",
                     "group": "inline/cell@10",
-                    "when": "config.notebookRunGroups.groupCount > 0 && !notebookRunGroups.inGroupOne && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 0 && !notebookRunGroups.inGroupOne && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.removeGroup1",
                     "group": "inline/cell@11",
-                    "when": "config.notebookRunGroups.groupCount > 0 && notebookRunGroups.inGroupOne && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 0 && notebookRunGroups.inGroupOne && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.executeGroup1",
                     "group": "inline/cell@12",
-                    "when": "config.notebookRunGroups.groupCount > 0 && notebookRunGroups.inGroupOne && config.notebookRunGroups.runIconsOnCell && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 0 && notebookRunGroups.inGroupOne && config.jupyter.notebookRunGroups.runIconsOnCell && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.addGroup2",
                     "group": "inline/cell@13",
-                    "when": "config.notebookRunGroups.groupCount > 1 && !notebookRunGroups.inGroupTwo && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 1 && !notebookRunGroups.inGroupTwo && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.removeGroup2",
                     "group": "inline/cell@14",
-                    "when": "config.notebookRunGroups.groupCount > 1 && notebookRunGroups.inGroupTwo && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 1 && notebookRunGroups.inGroupTwo && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.executeGroup2",
                     "group": "inline/cell@15",
-                    "when": "config.notebookRunGroups.groupCount > 1 && notebookRunGroups.inGroupTwo && config.notebookRunGroups.runIconsOnCell && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 1 && notebookRunGroups.inGroupTwo && config.jupyter.notebookRunGroups.runIconsOnCell && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.addGroup3",
                     "group": "inline/cell@16",
-                    "when": "config.notebookRunGroups.groupCount > 2 && !notebookRunGroups.inGroupThree && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 2 && !notebookRunGroups.inGroupThree && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.removeGroup3",
                     "group": "inline/cell@17",
-                    "when": "config.notebookRunGroups.groupCount > 2 && notebookRunGroups.inGroupThree && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 2 && notebookRunGroups.inGroupThree && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.executeGroup3",
                     "group": "inline/cell@18",
-                    "when": "config.notebookRunGroups.groupCount > 2 && notebookRunGroups.inGroupThree && config.notebookRunGroups.runIconsOnCell && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 2 && notebookRunGroups.inGroupThree && config.jupyter.notebookRunGroups.runIconsOnCell && config.jupyter.notebookRunGroups.enabled"
                 }
             ],
             "notebook/cell/execute": [
                 {
                     "command": "vscode-notebook-groups.executeGroup1",
-                    "when": "config.notebookRunGroups.groupCount > 0 && notebookRunGroups.inGroupOne && config.notebookRunGroups.runIconsInExecute && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 0 && notebookRunGroups.inGroupOne && config.jupyter.notebookRunGroups.runIconsInExecute && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.executeGroup2",
-                    "when": "config.notebookRunGroups.groupCount > 1 && notebookRunGroups.inGroupTwo && config.notebookRunGroups.runIconsInExecute && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 1 && notebookRunGroups.inGroupTwo && config.jupyter.notebookRunGroups.runIconsInExecute && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.executeGroup3",
-                    "when": "config.notebookRunGroups.groupCount > 2 && notebookRunGroups.inGroupThree && config.notebookRunGroups.runIconsInExecute && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 2 && notebookRunGroups.inGroupThree && config.jupyter.notebookRunGroups.runIconsInExecute && config.jupyter.notebookRunGroups.enabled"
                 }
             ],
             "notebook/cell/executePrimary": [
                 {
                     "command": "vscode-notebook-groups.executeGroup1",
-                    "when": "config.notebookRunGroups.groupCount > 0 && notebookRunGroups.inGroupOne && config.notebookRunGroups.runIconsInExecute && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 0 && notebookRunGroups.inGroupOne && config.jupyter.notebookRunGroups.runIconsInExecute && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.executeGroup2",
-                    "when": "config.notebookRunGroups.groupCount > 1 && notebookRunGroups.inGroupTwo && config.notebookRunGroups.runIconsInExecute && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 1 && notebookRunGroups.inGroupTwo && config.jupyter.notebookRunGroups.runIconsInExecute && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.executeGroup3",
-                    "when": "config.notebookRunGroups.groupCount > 2 && notebookRunGroups.inGroupThree && config.notebookRunGroups.runIconsInExecute && config.notebookRunGroups.enabled"
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 2 && notebookRunGroups.inGroupThree && config.jupyter.notebookRunGroups.runIconsInExecute && config.jupyter.notebookRunGroups.enabled"
                 }
             ],
             "view/title": [
@@ -332,6 +340,11 @@
                     "command": "jupyter-kernelManager.restartKernel",
                     "when": "view == jupyterKernelsView && viewItem =~ /activeKernel:/",
                     "group": "inline"
+                },
+                {
+                    "command": "jupyter-kernelManager.editKernelSpec",
+                    "when": "view == jupyterKernelsView && viewItem =~ /:startUsingLocalKernelSpec/",
+                    "group": "inline"
                 }
             ]
         },
@@ -354,21 +367,20 @@
         "configuration": [
             {
                 "type": "object",
-                "title": "NotebookRunGroups",
                 "properties": {
-                    "jupyter-powertoys.simpleTableOfContents.enabled": {
+                    "jupyter.simpleTableOfContents.enabled": {
                         "type": "boolean",
                         "default": true,
                         "description": "Enable a simple table of contents.",
                         "scope": "machine"
                     },
-                    "notebookRunGroups.enabled": {
+                    "jupyter.notebookRunGroups.enabled": {
                         "type": "boolean",
                         "default": true,
                         "description": "Enable the notebook run groups feature to provide commands to run groups of notebook cells.",
                         "scope": "machine"
                     },
-                    "notebookRunGroups.groupCount": {
+                    "jupyter.notebookRunGroups.groupCount": {
                         "type": "integer",
                         "enum": [
                             0,
@@ -376,23 +388,23 @@
                             2,
                             3
                         ],
-                        "default": 3,
+                        "default": 2,
                         "description": "Count of run groups to show (0-3).",
                         "scope": "machine"
                     },
-                    "notebookRunGroups.runIconsOnCell": {
+                    "jupyter.notebookRunGroups.runIconsOnCell": {
                         "type": "boolean",
                         "default": false,
                         "description": "Display group run icons on each cell toolbar.",
                         "scope": "machine"
                     },
-                    "notebookRunGroups.runIconsOnEditorToolbar": {
+                    "jupyter.notebookRunGroups.runIconsOnEditorToolbar": {
                         "type": "boolean",
                         "default": true,
                         "description": "Display group run icons on the global notebook editor toolbar.",
                         "scope": "machine"
                     },
-                    "notebookRunGroups.runIconsInExecute": {
+                    "jupyter.notebookRunGroups.runIconsInExecute": {
                         "type": "boolean",
                         "default": true,
                         "description": "Display group run icons in the cell execute dropdown.",
@@ -409,12 +421,14 @@
         ]
     },
     "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "pretest": "npm run compile && npm run lint",
-        "lint": "eslint src --ext ts",
+        "vscode:prepublish": "npm run esbuild-base -- --minify",
+        "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
+        "build": "npm run -S esbuild-base -- --sourcemap",
+        "watch": "npm run -S esbuild-base -- --sourcemap --watch",
+        "compile": "npm run build",
+        "test-compile": "tsc -p ./",
         "test": "node ./out/test/runTest.js",
+        "lint": "eslint src --ext ts",
         "postinstall": "npm run download-api",
         "download-api": "vscode-dts dev",
         "postdownload-api": "vscode-dts main",
@@ -428,7 +442,9 @@
         "@typescript-eslint/eslint-plugin": "^5.1.0",
         "@typescript-eslint/parser": "^5.1.0",
         "@vscode/test-electron": "^1.6.2",
+        "crypto": "^1.0.1",
         "deemon": "^1.6.0",
+        "esbuild": "^0.14.36",
         "eslint": "^8.1.0",
         "glob": "^7.1.7",
         "mocha": "^9.1.3",
