@@ -66,6 +66,16 @@
                 "enablement": "resource in notebookRunGroups.groupOneDocuments"
             },
             {
+                "command": "vscode-notebook-groups.inverseGroup1",
+                "title": "Execute Inverse Group 1",
+                "category": "Notebook Run Groups",
+                "icon": {
+                    "light": "images/notebookRunGroups/icons/RunGroupOne/RunGroupOneRun-light.svg",
+                    "dark": "images/notebookRunGroups/icons/RunGroupOne/RunGroupOneRun-dark.svg"
+                },
+                "enablement": "resource in notebookRunGroups.groupOneDocuments"
+            },
+            {
                 "command": "vscode-notebook-groups.addGroup1",
                 "title": "Add Group 1",
                 "category": "Notebook Run Groups",
@@ -220,6 +230,11 @@
                     "when": "config.jupyter.notebookRunGroups.groupCount > 0 && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
+                    "command": "vscode-notebook-groups.inverseGroup1",
+                    "group": "Notebook Run Groups",
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 0 && config.jupyter.notebookRunGroups.inverseEnabled && config.jupyter.notebookRunGroups.enabled"
+                },
+                {
                     "command": "vscode-notebook-groups.addGroup1",
                     "group": "Notebook Run Groups",
                     "when": "config.jupyter.notebookRunGroups.groupCount > 0 && config.jupyter.notebookRunGroups.enabled"
@@ -278,13 +293,18 @@
                     "when": "config.jupyter.notebookRunGroups.groupCount > 0 && config.jupyter.notebookRunGroups.runIconsOnEditorToolbar && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
-                    "command": "vscode-notebook-groups.executeGroup2",
+                    "command": "vscode-notebook-groups.inverseGroup1",
                     "group": "navigation/execute@7",
+                    "when": "config.jupyter.notebookRunGroups.groupCount > 0 && config.jupyter.notebookRunGroups.runIconsOnEditorToolbar && config.jupyter.notebookRunGroups.inverseEnabled && config.jupyter.notebookRunGroups.enabled"
+                },
+                {
+                    "command": "vscode-notebook-groups.executeGroup2",
+                    "group": "navigation/execute@8",
                     "when": "config.jupyter.notebookRunGroups.groupCount > 1 && config.jupyter.notebookRunGroups.runIconsOnEditorToolbar && config.jupyter.notebookRunGroups.enabled"
                 },
                 {
                     "command": "vscode-notebook-groups.executeGroup3",
-                    "group": "navigation/execute@8",
+                    "group": "navigation/execute@9",
                     "when": "config.jupyter.notebookRunGroups.groupCount > 2 && config.jupyter.notebookRunGroups.runIconsOnEditorToolbar && config.jupyter.notebookRunGroups.enabled"
                 }
             ],
@@ -433,6 +453,12 @@
                         "type": "boolean",
                         "default": true,
                         "description": "Enable the notebook run groups feature to provide commands to run groups of notebook cells.",
+                        "scope": "machine"
+                    },
+                    "jupyter.notebookRunGroups.inverseEnabled": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "Enable inverse run buttons to run all cells not in the specified run group.",
                         "scope": "machine"
                     },
                     "jupyter.notebookRunGroups.groupCount": {

@@ -58,6 +58,13 @@ export function registerCommands(context: vscode.ExtensionContext) {
             executeGroup(RunGroup.three, argNotebookCell(args));
         })
     );
+
+    // Register inverse commands
+    context.subscriptions.push(
+        vscode.commands.registerCommand('vscode-notebook-groups.inverseGroup1', (args) => {
+            executeGroup(RunGroup.one, argNotebookCell(args), true);
+        })
+    );
 }
 
 // Is the given argument a vscode NotebookCell?
@@ -72,7 +79,7 @@ function argNotebookCell(args: any): vscode.NotebookCell | undefined {
 }
 
 // Execute the given target run group. If a cell is specified use that document, if not find the active doc
-function executeGroup(targetRunGroup: RunGroup, notebookCell?: vscode.NotebookCell) {
+function executeGroup(targetRunGroup: RunGroup, notebookCell?: vscode.NotebookCell, inverse: boolean = false) {
     let doc = notebookCell?.notebook;
 
     // If we didn't get a cell passed in, just take the active documents
@@ -84,7 +91,7 @@ function executeGroup(targetRunGroup: RunGroup, notebookCell?: vscode.NotebookCe
     // Collect our cell indexes
     const targetCells = doc
         ?.getCells()
-        .filter((notebookCell) => cellInGroup(notebookCell, targetRunGroup))
+        .filter((notebookCell) => !inverse ? cellInGroup(notebookCell, targetRunGroup) : !cellInGroup(notebookCell, targetRunGroup))
         .map((cell) => {
             return { start: cell.index, end: cell.index + 1 };
         });
