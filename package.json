@@ -67,11 +67,11 @@
             },
             {
                 "command": "vscode-notebook-groups.inverseGroup1",
-                "title": "Execute Inverse Group 1",
+                "title": "Inverse Group 1",
                 "category": "Notebook Run Groups",
                 "icon": {
-                    "light": "images/notebookRunGroups/icons/RunGroupOne/RunGroupOneRun-light.svg",
-                    "dark": "images/notebookRunGroups/icons/RunGroupOne/RunGroupOneRun-dark.svg"
+                    "light": "images/notebookRunGroups/icons/RunGroupOne/RunGroupOneInverse-light.svg",
+                    "dark": "images/notebookRunGroups/icons/RunGroupOne/RunGroupOneInverse-dark.svg"
                 },
                 "enablement": "resource in notebookRunGroups.groupOneDocuments"
             },
